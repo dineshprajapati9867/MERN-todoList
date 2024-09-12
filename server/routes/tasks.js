@@ -25,8 +25,9 @@ router.get('/', async (req, res) => {
 
 // Update task
 router.put('/:id', async (req, res) => {
+    const {id}=req.params;
   try {
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const task = await Task.findByIdAndUpdate(id, req.body, { new: true });
     if (!task) return res.status(404).json({ message: 'Task not found' });
     res.status(200).json(task);
   } catch (error) {
@@ -36,8 +37,9 @@ router.put('/:id', async (req, res) => {
 
 // Delete task
 router.delete('/:id', async (req, res) => {
+  const {id}=req.params;
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
+    const task = await Task.findByIdAndDelete(id);
     if (!task) return res.status(404).json({ message: 'Task not found' });
     res.status(200).json({ message: 'Task deleted' });
   } catch (error) {

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import TaskForm from "./TaskForm";
 
 const TaskList = () => {
@@ -7,16 +6,19 @@ const TaskList = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [highlightedTaskIds, setHighlightedTaskIds] = useState([]);
 
+  // Fetch all tasks
   useEffect(() => {
-    axios
-      .get("https://mern-todolist-743c.onrender.com/tasks")
-      .then((response) => setTasks(response.data));
+    fetch("https://mern-todo-list-nine.vercel.app/tasks")
+      .then((response) => response.json())
+      .then((data) => setTasks(data))
+      .catch((error) => console.error("Error fetching tasks:", error));
   }, []);
 
   const handleSave = () => {
-    axios
-      .get("https://mern-todolist-743c.onrender.com/tasks")
-      .then((response) => setTasks(response.data));
+    fetch("https://mern-todo-list-nine.vercel.app/tasks")
+      .then((response) => response.json())
+      .then((data) => setTasks(data))
+      .catch((error) => console.error("Error fetching tasks:", error));
     setEditingTask(null);
   };
 
@@ -25,15 +27,21 @@ const TaskList = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`https://mern-todolist-743c.onrender.com/${id}`).then(() => handleSave());
+    fetch(`https://mern-todo-list-nine.vercel.app/tasks/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => handleSave())
+      .catch((error) => console.error("Error deleting task:", error));
   };
 
   const handleComplete = (task) => {
-    axios
-      .put(`https://mern-todolist-743c.onrender.com/${task._id}`, {
-        ...task,
-        completed: !task.completed,
-      })
+    fetch(`https://mern-todo-list-nine.vercel.app/tasks/${task._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...task, completed: !task.completed }),
+    })
       .then(() => {
         handleSave();
         if (task.completed) {
@@ -41,7 +49,8 @@ const TaskList = () => {
         } else {
           setHighlightedTaskIds((prev) => [...prev, task._id]);
         }
-      });
+      })
+      .catch((error) => console.error("Error updating task:", error));
   };
 
   return (

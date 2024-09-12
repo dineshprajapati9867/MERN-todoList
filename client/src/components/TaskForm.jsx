@@ -1,40 +1,73 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
 
 const TaskForm = ({ task, onSave }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
- 
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   useEffect(() => {
     if (task) {
       setTitle(task.title);
       setDescription(task.description);
     } else {
-      setTitle('');
-      setDescription('');
+      setTitle("");
+      setDescription("");
     }
   }, [task]);
- 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const taskData = { title, description };
-    if (task) {
-      axios.put(`https://mern-todolist-743c.onrender.com/tasks/${task._id}`, taskData)
-        .then(() => onSave())
-        .catch((err) => console.error(err));
-    } else {
-      axios.post('https://mern-todolist-743c.onrender.com/tasks', taskData)
-        .then(() => onSave())
-        .catch((err) => console.error(err));
+    try {
+      if (task) {
+        // PUT request to update the task
+        const response = await fetch(
+          `https://mern-todo-list-nine.vercel.app/tasks/${task._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to update task");
+        }
+      } else {
+        // POST request to create a new task
+        const response = await fetch("https://mern-todo-list-nine.vercel.app/tasks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(taskData),
+        });
+        setTitle("");
+        setDescription("");
+
+        if (!response.ok) {
+          throw new Error("Failed to add task");
+        }
+      }
+
+      onSave(); // Call onSave to update the task list
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4">{task ? 'Edit Task' : 'Add New Task'}</h2>
+      <h2 className="text-2xl font-semibold mb-4">
+        {task ? "Edit Task" : "Add New Task"}
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="title">
+          <label
+            className="block text-gray-700 text-sm font-medium mb-2"
+            htmlFor="title"
+          >
             Title
           </label>
           <input
@@ -48,7 +81,10 @@ const TaskForm = ({ task, onSave }) => {
           />
         </div>
         <div className="mb-3">
-          <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="description">
+          <label
+            className="block text-gray-700 text-sm font-medium mb-2"
+            htmlFor="description"
+          >
             Description
           </label>
           <textarea
@@ -66,9 +102,8 @@ const TaskForm = ({ task, onSave }) => {
             type="submit"
             className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {task ? 'Update Task' : 'Add Task'}
+            {task ? "Update Task" : "Add Task"}
           </button>
-          
         </div>
       </form>
     </div>
