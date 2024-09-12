@@ -5,7 +5,8 @@ const TaskForm = ({ task, onSave }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  // Reset form fields when task prop changes
+ console.log(import.meta.env.VITE_BACKEND_URL);
+ 
   useEffect(() => {
     if (task) {
       setTitle(task.title);
@@ -15,7 +16,7 @@ const TaskForm = ({ task, onSave }) => {
       setDescription('');
     }
   }, [task]);
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     const taskData = { title, description };
@@ -34,7 +35,7 @@ const TaskForm = ({ task, onSave }) => {
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-semibold mb-4">{task ? 'Edit Task' : 'Add New Task'}</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-6">
+        <div className="mb-3">
           <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="title">
             Title
           </label>
@@ -48,7 +49,7 @@ const TaskForm = ({ task, onSave }) => {
             required
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-3">
           <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="description">
             Description
           </label>
