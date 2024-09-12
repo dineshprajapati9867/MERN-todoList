@@ -47,11 +47,11 @@ const TaskList = () => {
   return (
     <div>
       <TaskForm task={editingTask} onSave={handleSave} />
-      <ul className="mt-4 max-w-4xl mx-auto p-4 space-y-4">
+      <ul className="mt-1 max-w-4xl mx-auto p-4 space-y-4">
         {tasks.map((task) => (
           <li
             key={task._id}
-            className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white shadow-md rounded-lg transition-opacity duration-300 ${
+            className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-white shadow-md rounded-lg transition-opacity duration-300 ${
               task.completed ? "opacity-50" : ""
             }`}
           >

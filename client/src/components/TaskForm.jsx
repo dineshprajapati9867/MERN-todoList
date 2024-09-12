@@ -4,8 +4,6 @@ import axios from 'axios';
 const TaskForm = ({ task, onSave }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
- console.log(import.meta.env.VITE_BACKEND_URL);
  
   useEffect(() => {
     if (task) {
