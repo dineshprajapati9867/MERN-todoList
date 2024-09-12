@@ -9,13 +9,13 @@ const TaskList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("https://mern-todolist-743c.onrender.com/tasks")
       .then((response) => setTasks(response.data));
   }, []);
 
   const handleSave = () => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("https://mern-todolist-743c.onrender.com/tasks")
       .then((response) => setTasks(response.data));
     setEditingTask(null);
   };
@@ -25,12 +25,12 @@ const TaskList = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/tasks/${id}`).then(() => handleSave());
+    axios.delete(`https://mern-todolist-743c.onrender.com/${id}`).then(() => handleSave());
   };
 
   const handleComplete = (task) => {
     axios
-      .put(`http://localhost:5000/tasks/${task._id}`, {
+      .put(`https://mern-todolist-743c.onrender.com/${task._id}`, {
         ...task,
         completed: !task.completed,
       })

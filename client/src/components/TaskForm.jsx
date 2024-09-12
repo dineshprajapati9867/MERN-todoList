@@ -21,11 +21,11 @@ const TaskForm = ({ task, onSave }) => {
     e.preventDefault();
     const taskData = { title, description };
     if (task) {
-      axios.put(`http://localhost:5000/tasks/${task._id}`, taskData)
+      axios.put(`https://mern-todolist-743c.onrender.com/tasks/${task._id}`, taskData)
         .then(() => onSave())
         .catch((err) => console.error(err));
     } else {
-      axios.post('http://localhost:5000/tasks', taskData)
+      axios.post('https://mern-todolist-743c.onrender.com/tasks', taskData)
         .then(() => onSave())
         .catch((err) => console.error(err));
     }
