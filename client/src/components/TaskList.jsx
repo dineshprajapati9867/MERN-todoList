@@ -8,6 +8,7 @@ const TaskList = () => {
 
   // Fetch all tasks
   useEffect(() => {
+<<<<<<< HEAD
     fetch("https://mern-todo-list-nine.vercel.app/tasks")
       .then((response) => response.json())
       .then((data) => setTasks(data))
@@ -19,6 +20,17 @@ const TaskList = () => {
       .then((response) => response.json())
       .then((data) => setTasks(data))
       .catch((error) => console.error("Error fetching tasks:", error));
+=======
+    axios
+      .get("https://mern-todolist-743c.onrender.com/tasks")
+      .then((response) => setTasks(response.data));
+  }, []);
+
+  const handleSave = () => {
+    axios
+      .get("https://mern-todolist-743c.onrender.com/tasks")
+      .then((response) => setTasks(response.data));
+>>>>>>> c0d275dd21a48eb5562ecc7fd0af6e7723c1ca17
     setEditingTask(null);
   };
 
@@ -27,6 +39,7 @@ const TaskList = () => {
   };
 
   const handleDelete = (id) => {
+<<<<<<< HEAD
     fetch(`https://mern-todo-list-nine.vercel.app/tasks/${id}`, {
       method: "DELETE",
     })
@@ -42,6 +55,17 @@ const TaskList = () => {
       },
       body: JSON.stringify({ ...task, completed: !task.completed }),
     })
+=======
+    axios.delete(`https://mern-todolist-743c.onrender.com/${id}`).then(() => handleSave());
+  };
+
+  const handleComplete = (task) => {
+    axios
+      .put(`https://mern-todolist-743c.onrender.com/${task._id}`, {
+        ...task,
+        completed: !task.completed,
+      })
+>>>>>>> c0d275dd21a48eb5562ecc7fd0af6e7723c1ca17
       .then(() => {
         handleSave();
         if (task.completed) {

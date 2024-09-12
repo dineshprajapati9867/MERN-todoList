@@ -17,6 +17,7 @@ const TaskForm = ({ task, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const taskData = { title, description };
+<<<<<<< HEAD
     try {
       if (task) {
         // PUT request to update the task
@@ -54,6 +55,16 @@ const TaskForm = ({ task, onSave }) => {
       onSave(); // Call onSave to update the task list
     } catch (error) {
       console.error(error.message);
+=======
+    if (task) {
+      axios.put(`https://mern-todolist-743c.onrender.com/${task._id}`, taskData)
+        .then(() => onSave())
+        .catch((err) => console.error(err));
+    } else {
+      axios.post('https://mern-todolist-743c.onrender.com/tasks', taskData)
+        .then(() => onSave())
+        .catch((err) => console.error(err));
+>>>>>>> c0d275dd21a48eb5562ecc7fd0af6e7723c1ca17
     }
   };
 
