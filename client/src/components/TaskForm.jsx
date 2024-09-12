@@ -17,7 +17,6 @@ const TaskForm = ({ task, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const taskData = { title, description };
-
     try {
       if (task) {
         // PUT request to update the task
@@ -44,32 +43,24 @@ const TaskForm = ({ task, onSave }) => {
           },
           body: JSON.stringify(taskData),
         });
-        setTitle("");
-        setDescription("");
 
         if (!response.ok) {
           throw new Error("Failed to add task");
         }
+
+        setTitle("");
+        setDescription("");
       }
 
       onSave(); // Call onSave to update the task list
     } catch (error) {
       console.error(error.message);
-    if (task) {
-      axios.put(`https://mern-todolist-743c.onrender.com/${task._id}`, taskData)
-        .then(() => onSave())
-        .catch((err) => console.error(err));
-    } else {
-      axios.post('https://mern-todolist-743c.onrender.com/tasks', taskData)
-        .then(() => onSave())
-        .catch((err) => console.error(err));
-
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4">
+      <h2 className="text-2xl font-semibold mb-1">
         {task ? "Edit Task" : "Add New Task"}
       </h2>
       <form onSubmit={handleSubmit}>
@@ -119,5 +110,5 @@ const TaskForm = ({ task, onSave }) => {
     </div>
   );
 };
-}
+
 export default TaskForm;
