@@ -12,7 +12,7 @@ const TaskList = () => {
   }, []);
 
   const handleSave = () => {
-    fetch("https://mern-todo-list-nine.vercel.app/tasks")
+    fetch("https://mern-todolist-743c.onrender.com/tasks")
       .then((response) => response.json())
       .then((data) => setTasks(data))
       .catch((error) => console.error("Error fetching tasks:", error));
@@ -24,7 +24,7 @@ const TaskList = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`https://mern-todo-list-nine.vercel.app/tasks/${id}`, {
+    fetch(`https://mern-todolist-743c.onrender.com/${id}`, {
       method: "DELETE",
     })
       .then(() => handleSave())
@@ -32,7 +32,7 @@ const TaskList = () => {
   };
 
   const handleComplete = (task) => {
-    fetch(`https://mern-todo-list-nine.vercel.app/tasks/${task._id}`, {
+    fetch(`https://mern-todolist-743c.onrender.com/${task._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
